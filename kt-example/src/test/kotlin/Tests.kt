@@ -6,7 +6,9 @@ class Tests {
 
     @Test
     fun test(){
+        println("Testing value")
         val value = testValue()
         Assertions.assertEquals(123 ,value)
+        
     }
 }

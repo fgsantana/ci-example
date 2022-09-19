@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kt-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kt-server
+  template:
+    metadata:
+      labels:
+        app: kt-server
+    spec:
+      containers:
+        - name: kt-server
+          image: kt-server
+          ports:
+            - containerPort: 8080

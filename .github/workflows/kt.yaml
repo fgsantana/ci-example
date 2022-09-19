@@ -37,5 +37,27 @@ jobs:
         with:
           context: kt-example
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kt-example:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kt-server-example-ci_cd:${{ github.sha }}, ${{ secrets.DOCKERHUB_USERNAME }}/kt-server-example-ci_cd:latest
+
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v1
+
+      - name: Kustomize
+        env: 
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          GITHUB_SHA: ${{ github.sha }}
+        working-directory: kt-example/k8s
+        run: kustomize edit set image kt-server=$DOCKER_USERNAME/kt-server-example-ci_cd:$GITHUB_SHA
+
+      - name: Commit image update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Github action"
+          git commit -am "Update image:tag"
+
+      - name: Push 
+        uses: ad-m/github-push-action@master
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: fgsantana/ci_cd-example
      

@@ -7,5 +7,5 @@ resources:
 
 images:
 - name: kt-server
-  newName: image
-  newTag: tag
+  newName: felipes102/kt-server-example-ci_cd
+  newTag: 3e7c4c21719ab4fed516de0497f2c7ca7193296f
